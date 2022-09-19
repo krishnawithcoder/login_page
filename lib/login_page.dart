@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loginpage/main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -9,15 +11,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
- @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
   }
 
   @override
@@ -30,8 +31,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-               Icon(
-                 Icons.android,size: 100),
+                Icon(Icons.android, size: 100),
                 SizedBox(height: 40),
                 SizedBox(height: 25),
                 Text(
@@ -96,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 130.0),
                   child: GestureDetector(
+                    onTap: signIn,
                     child: Container(
                       padding: EdgeInsets.all(16.0),
                       decoration: BoxDecoration(

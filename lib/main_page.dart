@@ -1,12 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:loginpage/login_page.dart';
-
 import 'Home_Page.dart';
-class MainPage extends StatelessWidget {
-  const MainPage({Key? key}) : super(key: key);
+import 'login_page.dart';
 
+class MainPagge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: StreamBuilder<User>(
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return HomePage();
+          } else {
+            return LoginPage();
+          }
+        },
+      ),
+    );
   }
 }
